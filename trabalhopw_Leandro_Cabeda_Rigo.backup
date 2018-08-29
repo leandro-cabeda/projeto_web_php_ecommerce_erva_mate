@@ -1,0 +1,581 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.4.0
+-- Dumped by pg_dump version 9.4.0
+-- Started on 2017-06-23 08:20:36
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 184 (class 3079 OID 11855)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2061 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 175 (class 1259 OID 114863)
+-- Name: cidade; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE cidade (
+    cod integer NOT NULL,
+    nome character varying(30),
+    estado character(2)
+);
+
+
+ALTER TABLE cidade OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 114861)
+-- Name: cidade_cod_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cidade_cod_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE cidade_cod_seq OWNER TO postgres;
+
+--
+-- TOC entry 2062 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: cidade_cod_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE cidade_cod_seq OWNED BY cidade.cod;
+
+
+--
+-- TOC entry 183 (class 1259 OID 114911)
+-- Name: cli_prod; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE cli_prod (
+    cod integer NOT NULL,
+    cli integer,
+    prod integer,
+    qtd integer,
+    total money
+);
+
+
+ALTER TABLE cli_prod OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 114909)
+-- Name: cli_prod_cod_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cli_prod_cod_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE cli_prod_cod_seq OWNER TO postgres;
+
+--
+-- TOC entry 2063 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: cli_prod_cod_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE cli_prod_cod_seq OWNED BY cli_prod.cod;
+
+
+--
+-- TOC entry 181 (class 1259 OID 114903)
+-- Name: cliente; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE cliente (
+    cod integer NOT NULL,
+    nome character varying(50),
+    login character varying(50),
+    senha character varying(50),
+    cidade character varying(50),
+    estado character varying(2),
+    email character varying(50),
+    endereco character varying(50),
+    cpf character varying(20)
+);
+
+
+ALTER TABLE cliente OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 114901)
+-- Name: cliente_cod_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cliente_cod_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE cliente_cod_seq OWNER TO postgres;
+
+--
+-- TOC entry 2064 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: cliente_cod_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE cliente_cod_seq OWNED BY cliente.cod;
+
+
+--
+-- TOC entry 177 (class 1259 OID 114871)
+-- Name: fornecedor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE fornecedor (
+    cod integer NOT NULL,
+    razao character varying(50),
+    cnpj character varying(15),
+    email character varying(30),
+    cidade integer
+);
+
+
+ALTER TABLE fornecedor OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 114869)
+-- Name: fornecedor_cod_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE fornecedor_cod_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE fornecedor_cod_seq OWNER TO postgres;
+
+--
+-- TOC entry 2065 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: fornecedor_cod_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE fornecedor_cod_seq OWNED BY fornecedor.cod;
+
+
+--
+-- TOC entry 179 (class 1259 OID 114890)
+-- Name: produto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE produto (
+    cod integer NOT NULL,
+    nome character varying(30),
+    forne integer,
+    qtd integer,
+    img character varying(50),
+    custo money
+);
+
+
+ALTER TABLE produto OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 114888)
+-- Name: produto_cod_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE produto_cod_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE produto_cod_seq OWNER TO postgres;
+
+--
+-- TOC entry 2066 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: produto_cod_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE produto_cod_seq OWNED BY produto.cod;
+
+
+--
+-- TOC entry 173 (class 1259 OID 114849)
+-- Name: usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE usuario (
+    cod integer NOT NULL,
+    nome character varying(50),
+    login character varying(20),
+    senha character varying(100),
+    dat date,
+    hora_acesso time without time zone,
+    num_acesso integer,
+    ip character varying(50),
+    email character varying(50)
+);
+
+
+ALTER TABLE usuario OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 114847)
+-- Name: usuario_cod_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE usuario_cod_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE usuario_cod_seq OWNER TO postgres;
+
+--
+-- TOC entry 2067 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: usuario_cod_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE usuario_cod_seq OWNED BY usuario.cod;
+
+
+--
+-- TOC entry 1912 (class 2604 OID 114866)
+-- Name: cod; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cidade ALTER COLUMN cod SET DEFAULT nextval('cidade_cod_seq'::regclass);
+
+
+--
+-- TOC entry 1916 (class 2604 OID 114914)
+-- Name: cod; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cli_prod ALTER COLUMN cod SET DEFAULT nextval('cli_prod_cod_seq'::regclass);
+
+
+--
+-- TOC entry 1915 (class 2604 OID 114906)
+-- Name: cod; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cliente ALTER COLUMN cod SET DEFAULT nextval('cliente_cod_seq'::regclass);
+
+
+--
+-- TOC entry 1913 (class 2604 OID 114874)
+-- Name: cod; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY fornecedor ALTER COLUMN cod SET DEFAULT nextval('fornecedor_cod_seq'::regclass);
+
+
+--
+-- TOC entry 1914 (class 2604 OID 114893)
+-- Name: cod; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY produto ALTER COLUMN cod SET DEFAULT nextval('produto_cod_seq'::regclass);
+
+
+--
+-- TOC entry 1911 (class 2604 OID 114852)
+-- Name: cod; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario ALTER COLUMN cod SET DEFAULT nextval('usuario_cod_seq'::regclass);
+
+
+--
+-- TOC entry 2045 (class 0 OID 114863)
+-- Dependencies: 175
+-- Data for Name: cidade; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY cidade (cod, nome, estado) FROM stdin;
+1	Passo Fundo	RS
+2	Marau	RS
+3	Carazinho	RS
+4	Belém	PA
+\.
+
+
+--
+-- TOC entry 2068 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: cidade_cod_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('cidade_cod_seq', 4, true);
+
+
+--
+-- TOC entry 2053 (class 0 OID 114911)
+-- Dependencies: 183
+-- Data for Name: cli_prod; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY cli_prod (cod, cli, prod, qtd, total) FROM stdin;
+1	5	13	8	R$104,00
+2	6	21	10	R$110,00
+\.
+
+
+--
+-- TOC entry 2069 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: cli_prod_cod_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('cli_prod_cod_seq', 2, true);
+
+
+--
+-- TOC entry 2051 (class 0 OID 114903)
+-- Dependencies: 181
+-- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY cliente (cod, nome, login, senha, cidade, estado, email, endereco, cpf) FROM stdin;
+5	leo	leo	d41d8cd98f00b204e9800998ecf8427e	Passo Fundo	RS	leandrokarona@hotmail.com	7 de setembro	016.890.648-12
+6	leornardo	leornardo	d41d8cd98f00b204e9800998ecf8427e	Marau	RS	leo@hotmail.com	15 de novembro 625	999.555.777-12
+\.
+
+
+--
+-- TOC entry 2070 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: cliente_cod_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('cliente_cod_seq', 14, true);
+
+
+--
+-- TOC entry 2047 (class 0 OID 114871)
+-- Dependencies: 177
+-- Data for Name: fornecedor; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY fornecedor (cod, razao, cnpj, email, cidade) FROM stdin;
+1	234	34567	leandro.cabeda@hotmail.com	1
+2	890	789	leandrosupre@hotmail.com	4
+3	555	4444	leandrosupre@hotmail.com	2
+\.
+
+
+--
+-- TOC entry 2071 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: fornecedor_cod_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('fornecedor_cod_seq', 3, true);
+
+
+--
+-- TOC entry 2049 (class 0 OID 114890)
+-- Dependencies: 179
+-- Data for Name: produto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY produto (cod, nome, forne, qtd, img, custo) FROM stdin;
+14	seiva verde	1	10	produto_14.jpg	R$11,00
+15	picolo	2	7	produto_15.jpg	R$14,00
+16	tertulia	3	12	produto_16.jpg	R$11,00
+18	regina	2	7	produto_18.jpg	R$10,00
+19	rei verde	3	13	produto_19.jpg	R$13,00
+20	pampeiro	2	12	produto_20.jpg	R$14,00
+21	aureense	1	34	produto_21.jpg	R$11,00
+22	matevita	2	13	produto_22.jpg	R$9,00
+23	saphira	3	5	produto_23.jpg	R$15,00
+13	goma verde	2	2	produto_13.jpg	R$13,00
+24	seiva pura	2	10	produto_24.jpg	R$12,00
+25	barao	1	5	produto_25.jpg	R$9,00
+\.
+
+
+--
+-- TOC entry 2072 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: produto_cod_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('produto_cod_seq', 25, true);
+
+
+--
+-- TOC entry 2043 (class 0 OID 114849)
+-- Dependencies: 173
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY usuario (cod, nome, login, senha, dat, hora_acesso, num_acesso, ip, email) FROM stdin;
+27	leo	leo	9ae2be73b58b565bce3e47493a56e26a	2017-06-22	16:06:20	2	::1	leandrocabeda@hotmail.com
+15	leandro	leandro	9ae2be73b58b565bce3e47493a56e26a	2017-06-22	23:06:12	42	::1	leandrokarona@hotmail.com
+25	leandro	leandrocabeda	9ae2be73b58b565bce3e47493a56e26a	2017-06-21	10:24:46	1	::1	leandro.cabeda@hotmail.com
+\.
+
+
+--
+-- TOC entry 2073 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: usuario_cod_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('usuario_cod_seq', 29, true);
+
+
+--
+-- TOC entry 1928 (class 2606 OID 114916)
+-- Name: cli_prod_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY cli_prod
+    ADD CONSTRAINT cli_prod_pkey PRIMARY KEY (cod);
+
+
+--
+-- TOC entry 1926 (class 2606 OID 114908)
+-- Name: cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY cliente
+    ADD CONSTRAINT cliente_pkey PRIMARY KEY (cod);
+
+
+--
+-- TOC entry 1918 (class 2606 OID 114854)
+-- Name: pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT pk PRIMARY KEY (cod);
+
+
+--
+-- TOC entry 1920 (class 2606 OID 114868)
+-- Name: pk_cod; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY cidade
+    ADD CONSTRAINT pk_cod PRIMARY KEY (cod);
+
+
+--
+-- TOC entry 1922 (class 2606 OID 114876)
+-- Name: pk_fornecedor; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY fornecedor
+    ADD CONSTRAINT pk_fornecedor PRIMARY KEY (cod);
+
+
+--
+-- TOC entry 1924 (class 2606 OID 114895)
+-- Name: pk_produto; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY produto
+    ADD CONSTRAINT pk_produto PRIMARY KEY (cod);
+
+
+--
+-- TOC entry 1929 (class 2606 OID 114877)
+-- Name: fk_cidade; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY fornecedor
+    ADD CONSTRAINT fk_cidade FOREIGN KEY (cidade) REFERENCES cidade(cod);
+
+
+--
+-- TOC entry 1931 (class 2606 OID 114917)
+-- Name: fk_cli; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cli_prod
+    ADD CONSTRAINT fk_cli FOREIGN KEY (cli) REFERENCES cliente(cod);
+
+
+--
+-- TOC entry 1930 (class 2606 OID 114896)
+-- Name: fk_fornecedor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY produto
+    ADD CONSTRAINT fk_fornecedor FOREIGN KEY (forne) REFERENCES fornecedor(cod);
+
+
+--
+-- TOC entry 1932 (class 2606 OID 114922)
+-- Name: fk_prod; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cli_prod
+    ADD CONSTRAINT fk_prod FOREIGN KEY (prod) REFERENCES produto(cod);
+
+
+--
+-- TOC entry 2060 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2017-06-23 08:20:36
+
+--
+-- PostgreSQL database dump complete
+--
+
